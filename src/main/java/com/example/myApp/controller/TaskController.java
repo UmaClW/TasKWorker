@@ -1,6 +1,7 @@
 package com.example.myApp.controller;
 
 
+import com.example.myApp.Task;
 import com.example.myApp.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class TaskController {
     }
 
     @GetMapping("/api/tasks")
-    public Map<String, TaskService.Task> getAllTasks() {
+    public Map<String, Task> getAllTasks() {
         return taskService.getStorage();
     }
 

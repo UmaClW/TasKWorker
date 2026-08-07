@@ -1,5 +1,6 @@
 package com.example.myApp.services;
 
+import com.example.myApp.Task;
 import com.example.myApp.exception.TaskNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -45,39 +46,5 @@ public class TaskService {
         }
         Task updated = new Task(title, description);
         storage.put(id, updated);
-    }
-
-    public static class Task {
-        private final String title;
-        private final String description;
-        private final boolean completed;
-        private final String id;
-
-        public String getId() {
-            return id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public boolean isCompleted() {
-            return completed;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String printTask() {
-            return "Идентификатор: " + id + " Имя: " + title + " Описание: " + description + " Статус: " + completed + "\n";
-        }
-
-        public Task(String title, String description) {
-            this.completed = false;
-            this.description = description;
-            this.title = title;
-            this.id = UUID.randomUUID().toString();
-        }
     }
 }
