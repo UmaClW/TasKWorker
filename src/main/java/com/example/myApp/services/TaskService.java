@@ -1,5 +1,6 @@
-package com.example.myApp;
+package com.example.myApp.services;
 
+import com.example.myApp.exception.TaskNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -9,9 +10,9 @@ import java.util.UUID;
 
 @Service
 public class TaskService {
-    private final Map<String, Task1> storage = new ConcurrentHashMap<>();
+    private final Map<String, Task> storage = new ConcurrentHashMap<>();
 
-    public Map<String, Task1> getStorage() {
+    public Map<String, Task> getStorage() {
         return storage;
     }
 
@@ -19,12 +20,12 @@ public class TaskService {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Поле title обязательно для заполнения");
         }
-        Task1 task = new Task1(title, description);
+        Task task = new Task(title, description);
         storage.put(task.getId(), task);
     }
 
     public String getTask(String id) {
-        Task1 task = storage.get(id);
+        Task task = storage.get(id);
         if (task == null) {
             throw new TaskNotFoundException(id);
         }
@@ -42,15 +43,15 @@ public class TaskService {
         if (!storage.containsKey(id)) {
             throw new TaskNotFoundException(id);
         }
-        Task1 updated = new Task1(title, description);
+        Task updated = new Task(title, description);
         storage.put(id, updated);
     }
 
-    static class Task1 {
-        private String title;
-        private String description;
-        private boolean completed;
-        private String id;
+    public static class Task {
+        private final String title;
+        private final String description;
+        private final boolean completed;
+        private final String id;
 
         public String getId() {
             return id;
@@ -72,7 +73,7 @@ public class TaskService {
             return "Идентификатор: " + id + " Имя: " + title + " Описание: " + description + " Статус: " + completed + "\n";
         }
 
-        public Task1(String title, String description) {
+        public Task(String title, String description) {
             this.completed = false;
             this.description = description;
             this.title = title;
