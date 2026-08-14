@@ -23,7 +23,7 @@ public class TaskController {
     }
 
     @GetMapping("/api/tasks/{id}")
-    public String getTask(@PathVariable String id) {
+    public Task getTask(@PathVariable String id) {
         return taskService.getTask(id);
     }
 
