@@ -1,23 +1,21 @@
 package com.example.myApp;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
+
 @Entity
 public class Task {
-    private  String title;
-    private  String description;
-    private  boolean completed;
+    private String title;
+    private String description;
+    private boolean completed;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -42,5 +40,6 @@ public class Task {
         this.description = description;
     }
 
-    public Task() {}
+    public Task() {
+    }
 }

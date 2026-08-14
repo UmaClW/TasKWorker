@@ -4,6 +4,7 @@ import com.example.myApp.Task;
 import com.example.myApp.TaskRepository;
 import com.example.myApp.exception.TaskNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,32 +17,36 @@ public class TaskService {
     public TaskService(TaskRepository taskRepository) { // конструктор
         this.taskRepository = taskRepository;
     }
-
+    @Transactional
     public void addTask(String title, String description) {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Поле title обязательно для заполнения");
         }
         Task task = new Task(title, description);
-        storage.put(task.getId(), task);
+        taskRepository.save(task);
     }
-
+    @Transactional(readOnly = true)
         public Task getTask(String id) {
             return taskRepository.findById(id)
                     .orElseThrow(() -> new TaskNotFoundException(id));
     }
-
+    @Transactional
     public void removeTask(String id) {
-        if (!storage.containsKey(id)) {
+        if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException(id);
         }
-        storage.remove(id);
+        taskRepository.deleteById(id);
     }
-
+    @Transactional
     public void changeTask(String id, String title, String description) {
-        if (!storage.containsKey(id)) {
+        if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException(id);
         }
         Task updated = new Task(title, description);
-        storage.put(id, updated);
+        taskRepository.save(updated);
+    }
+
+    public Map<String, Task> getStorage() {
+        return (Map<String, Task>) taskRepository;
     }
 }
