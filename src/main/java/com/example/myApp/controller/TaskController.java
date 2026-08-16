@@ -5,7 +5,7 @@ import com.example.myApp.Task;
 import com.example.myApp.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 
 @RestController
@@ -18,8 +18,8 @@ public class TaskController {
     }
 
     @GetMapping("/api/tasks")
-    public Map<String, Task> getAllTasks() {
-        return taskService.getStorage();
+    public  List<Task> getAllTasks() {
+        return taskService.PrintAll();
     }
 
     @GetMapping("/api/tasks/{id}")
@@ -28,15 +28,13 @@ public class TaskController {
     }
 
     @PostMapping("/api/tasks")
-    public String addTask(@RequestParam String title, @RequestParam String description) {
-        taskService.addTask(title, description);
-        return "Задача успешно добавлена";
+    public Task addTask(@RequestParam String title, @RequestParam String description) {
+        return taskService.addTask(title, description);
     }
 
     @PutMapping("/api/tasks/{id}")
-    public String changeTask(@PathVariable String id, @RequestParam String title, @RequestParam String description) {
-        taskService.changeTask(id, title, description);
-        return "Задача успешно изменена";
+    public Task changeTask(@PathVariable String id, @RequestParam String title, @RequestParam String description) {
+        return taskService.changeTask(id, title, description);
     }
 
     @DeleteMapping("/api/tasks/{id}")

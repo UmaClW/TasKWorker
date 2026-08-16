@@ -6,8 +6,7 @@ import com.example.myApp.exception.TaskNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 
 @Service
@@ -18,12 +17,12 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
     @Transactional
-    public void addTask(String title, String description) {
+    public Task addTask(String title, String description) {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Поле title обязательно для заполнения");
         }
         Task task = new Task(title, description);
-        taskRepository.save(task);
+        return taskRepository.save(task);
     }
     @Transactional(readOnly = true)
         public Task getTask(String id) {
@@ -38,15 +37,15 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
     @Transactional
-    public void changeTask(String id, String title, String description) {
+    public Task changeTask(String id, String title, String description) {
         if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException(id);
         }
         Task updated = new Task(title, description);
         taskRepository.save(updated);
+        return updated;
     }
-
-    public Map<String, Task> getStorage() {
-        return (Map<String, Task>) taskRepository;
+    public List<Task> PrintAll() {
+        return taskRepository.findAll();
     }
 }
