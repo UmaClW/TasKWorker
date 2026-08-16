@@ -30,11 +30,12 @@ public class TaskService {
                     .orElseThrow(() -> new TaskNotFoundException(id));
     }
     @Transactional
-    public void removeTask(String id) {
+    public Task removeTask(String id) {
         if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException(id);
         }
         taskRepository.deleteById(id);
+        return null;
     }
     @Transactional
     public Task changeTask(String id, String title, String description) {

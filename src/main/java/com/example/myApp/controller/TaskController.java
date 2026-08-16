@@ -38,9 +38,8 @@ public class TaskController {
     }
 
     @DeleteMapping("/api/tasks/{id}")
-    public String deleteTask(@PathVariable String id) {
-        taskService.removeTask(id);
-        return "Задача успешно удалена";
+    public Task deleteTask(@PathVariable String id) {
+        return taskService.removeTask(id);
     }
 
 }
