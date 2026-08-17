@@ -29,19 +29,18 @@ public class TaskController {
     }
 
     @PostMapping("/api/tasks")
-    public Task addTask(@RequestParam String title, @RequestParam String description) {
-        return taskService.addTask(title, description);
+    public Task addTask(@RequestBody Task task) {
+        return taskService.addTask(task.getTitle(), task.getDescription());
     }
 
     @PutMapping("/api/tasks/{id}")
-    public Task changeTask(@PathVariable UUID id, @RequestParam String title, @RequestParam String description) {
-        return taskService.changeTask(id, title, description);
+    public Task changeTask(@PathVariable UUID id, @RequestBody Task task ) {
+        return taskService.changeTask(id, task.getTitle(), task.getDescription());
     }
 
     @DeleteMapping("/api/tasks/{id}")
-    public String deleteTask(@PathVariable UUID id) {
+    public void deleteTask(@PathVariable UUID id) {
          taskService.removeTask(id);
-         return "Задача удалена";
     }
 
 }
