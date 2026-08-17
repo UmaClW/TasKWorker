@@ -42,7 +42,7 @@ public class TaskService {
         if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException(id.toString());
         }
-        Task updated = new Task(title, description);
+        Task updated = new Task(id, title, description);
         taskRepository.save(updated);
         return updated;
     }

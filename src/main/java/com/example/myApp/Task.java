@@ -40,6 +40,12 @@ public class Task {
         this.description = description;
     }
 
+    public Task(UUID id, String title, String description) {
+        this.title = title;
+        this.description = description;
+        this.id = id;
+    }
+
     public Task() {
     }
 }
