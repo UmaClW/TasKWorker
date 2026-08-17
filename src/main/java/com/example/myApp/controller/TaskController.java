@@ -6,6 +6,7 @@ import com.example.myApp.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -23,7 +24,7 @@ public class TaskController {
     }
 
     @GetMapping("/api/tasks/{id}")
-    public Task getTask(@PathVariable String id) {
+    public Task getTask(@PathVariable UUID id) {
         return taskService.getTask(id);
     }
 
@@ -33,13 +34,14 @@ public class TaskController {
     }
 
     @PutMapping("/api/tasks/{id}")
-    public Task changeTask(@PathVariable String id, @RequestParam String title, @RequestParam String description) {
+    public Task changeTask(@PathVariable UUID id, @RequestParam String title, @RequestParam String description) {
         return taskService.changeTask(id, title, description);
     }
 
     @DeleteMapping("/api/tasks/{id}")
-    public String deleteTask(@PathVariable String id) {
-        return taskService.removeTask(id);
+    public String deleteTask(@PathVariable UUID id) {
+         taskService.removeTask(id);
+         return "Задача удалена";
     }
 
 }

@@ -23,12 +23,12 @@ public class Task {
         return title;
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public boolean isCompleted() {
+        return completed;
     }
 
     public String printTask() {
