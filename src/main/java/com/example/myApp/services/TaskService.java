@@ -26,22 +26,21 @@ public class TaskService {
         return taskRepository.save(task);
     }
     @Transactional(readOnly = true)
-        public Task getTask(String id) {
-            return taskRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new TaskNotFoundException(id));
+        public Task getTask(UUID id) {
+            return taskRepository.findById(id)
+                    .orElseThrow(() -> new TaskNotFoundException(id.toString()));
     }
     @Transactional
-    public String removeTask(String id) {
-        if (!taskRepository.existsById(UUID.fromString(id))) {
-            throw new TaskNotFoundException(id);
+    public void removeTask(UUID id) {
+        if (!taskRepository.existsById(id)) {
+            throw new TaskNotFoundException(id.toString());
         }
-        taskRepository.deleteById(UUID.fromString(id));
-        return "Задача удалена";
+        taskRepository.deleteById(id);
     }
     @Transactional
-    public Task changeTask(String id, String title, String description) {
-        if (!taskRepository.existsById(UUID.fromString(id))) {
-            throw new TaskNotFoundException(id);
+    public Task changeTask(UUID id, String title, String description) {
+        if (!taskRepository.existsById(id)) {
+            throw new TaskNotFoundException(id.toString());
         }
         Task updated = new Task(title, description);
         taskRepository.save(updated);
