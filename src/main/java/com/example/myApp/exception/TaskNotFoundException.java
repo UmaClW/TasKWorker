@@ -1,4 +1,4 @@
-package com.example.myApp;
+package com.example.myApp.exception;
 
 public class TaskNotFoundException extends RuntimeException {
     public TaskNotFoundException(String id) {
