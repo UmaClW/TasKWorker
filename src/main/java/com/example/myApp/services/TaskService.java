@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -26,20 +27,20 @@ public class TaskService {
     }
     @Transactional(readOnly = true)
         public Task getTask(String id) {
-            return taskRepository.findById(id)
+            return taskRepository.findById(UUID.fromString(id))
                     .orElseThrow(() -> new TaskNotFoundException(id));
     }
     @Transactional
     public String removeTask(String id) {
-        if (!taskRepository.existsById(id)) {
+        if (!taskRepository.existsById(UUID.fromString(id))) {
             throw new TaskNotFoundException(id);
         }
-        taskRepository.deleteById(id);
+        taskRepository.deleteById(UUID.fromString(id));
         return "Задача удалена";
     }
     @Transactional
     public Task changeTask(String id, String title, String description) {
-        if (!taskRepository.existsById(id)) {
+        if (!taskRepository.existsById(UUID.fromString(id))) {
             throw new TaskNotFoundException(id);
         }
         Task updated = new Task(title, description);
