@@ -2,7 +2,7 @@ package com.example.myApp.controller;
 
 
 import com.example.myApp.Task;
-import com.example.myApp.services.TaskService;
+import com.example.myApp.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
