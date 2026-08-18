@@ -2,7 +2,9 @@ package com.example.myApp.controller;
 
 
 import com.example.myApp.Task;
-import com.example.myApp.services.TaskService;
+import com.example.myApp.service.TaskService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +31,8 @@ public class TaskController {
     }
 
     @PostMapping("/api/tasks")
-    public Task addTask(@RequestBody Task task) {
-        return taskService.addTask(task.getTitle(), task.getDescription());
+    public ResponseEntity<Task> addTask(@RequestBody Task task) {
+         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addTask(task.getTitle(), task.getDescription()));
     }
 
     @PutMapping("/api/tasks/{id}")
@@ -39,8 +41,9 @@ public class TaskController {
     }
 
     @DeleteMapping("/api/tasks/{id}")
-    public void deleteTask(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable UUID id) {
          taskService.removeTask(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

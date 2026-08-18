@@ -1,7 +1,7 @@
-package com.example.myApp.services;
+package com.example.myApp.service;
 
 import com.example.myApp.Task;
-import com.example.myApp.TaskRepository;
+import com.example.myApp.repository.TaskRepository;
 import com.example.myApp.exception.TaskNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
